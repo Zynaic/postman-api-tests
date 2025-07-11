@@ -1,0 +1,12 @@
+{
+  "name": "postman-api-tests",
+  "version": "1.0.0",
+  "description": "API tests using Postman and Newman",
+  "scripts": {
+    "test": "newman run collections/collection.json -e environments/environment.json -r html,json --reporter-html-export reports/report.html --reporter-json-export reports/report.json"
+  },
+  "dependencies": {
+    "newman": "^6.0.0",
+    "newman-reporter-html": "^1.0.5"
+  }
+}
