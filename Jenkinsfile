@@ -14,7 +14,7 @@ pipeline {
         
         stage('Install Dependencies') {
             steps {
-                sh 'npm install'
+                bat 'npm install'
             }
         }
         
@@ -22,7 +22,7 @@ pipeline {
             steps {
                 script {
                     try {
-                        sh 'npm test'
+                        bat 'npm test'
                     } catch (Exception e) {
                         currentBuild.result = 'UNSTABLE'
                         error "Tests failed: ${e.getMessage()}"
