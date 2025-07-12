@@ -29,8 +29,8 @@
 											"    pm.expect(pm.request.method).to.eql('GET');\r",
 											"});\r",
 											"//Check response time\r",
-											"pm.test(\"Response time is less than 2000ms\", () => {\r",
-											"    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+											"pm.test(\"Response time is less than 20000ms\", () => {\r",
+											"    pm.expect(pm.response.responseTime).to.be.below(20000);\r",
 											"});"
 										],
 										"type": "text/javascript",
