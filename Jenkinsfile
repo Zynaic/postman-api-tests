@@ -12,11 +12,6 @@ pipeline {
             }
         }
         
-        stage('Install Dependencies') {
-            steps {
-                bat 'npm install'
-            }
-        }
         
         stage('Run Postman Tests') {
             steps {
