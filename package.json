@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "API tests using Postman and Newman",
   "scripts": {
-    "test": "newman run collections/FakeStoreAPI.postman_collection.json -e environments/EVN.postman_environment.json -r html,json --reporter-html-export reports/report.html --reporter-json-export reports/report.json"
+    "test": "newman run collections/FakeStoreAPI.postman_collections.json -e environments/EVN.postman_environment.json -r html,json --reporter-html-export reports/report.html --reporter-json-export reports/report.json"
   },
   "dependencies": {
     "newman": "^6.2.1",
