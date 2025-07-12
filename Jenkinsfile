@@ -1,46 +1,50 @@
 pipeline {
     agent any
-    
+
     tools {
         nodejs 'NodeJS'
     }
-    
+
     stages {
         stage('Checkout') {
             steps {
                 checkout scm
             }
         }
-        
-        
+
         stage('Run Postman Tests') {
             steps {
                 script {
                     try {
                         bat 'npm test'
                     } catch (Exception e) {
+
+                        // Mark build as unstable and allow archive stage to run
                         currentBuild.result = 'UNSTABLE'
-                        error "Tests failed: ${e.getMessage()}"
+                        echo "Tests failed: ${e.getMessage()}"
                     }
                 }
             }
         }
-        
+
         stage('Archive Reports') {
             steps {
+                // Archive reports regardless of test result
                 archiveArtifacts artifacts: 'reports/**/*', allowEmptyArchive: true
+
+                // Publish HTML report to Jenkins UI
                 publishHTML([
-                    allowMissing: false,
-                    alwaysLinkToLastBuild: true,
-                    keepAll: true,
+                    reportName: 'Newman Test Report',
                     reportDir: 'reports',
                     reportFiles: 'report.html',
-                    reportName: 'Newman Test Report'
+                    allowMissing: true,
+                    alwaysLinkToLastBuild: true,
+                    keepAll: true
                 ])
             }
         }
     }
-    
+
     post {
         always {
             cleanWs()
@@ -48,11 +52,11 @@ pipeline {
         success {
             echo 'All tests passed successfully!'
         }
-        failure {
-            echo 'Tests failed. Check the reports for details.'
-        }
         unstable {
-            echo 'Some tests failed. Check the reports for details.'
+            echo 'Some tests failed. Check the Newman Test Report.'
+        }
+        failure {
+            echo 'Build failed. Check the console log and reports.'
         }
     }
 }
